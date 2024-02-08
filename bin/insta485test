@@ -1,0 +1,27 @@
+#!/bin/bash
+#
+# insta485run
+#
+# Clean, build and start server
+#
+# Andrew DeOrio <awdeorio@umich.edu>
+
+
+# Stop on errors, print commands
+# See https://vaneyckt.io/posts/safer_bash_scripts_with_set_euxo_pipefail/
+set -Eeuo pipefail
+
+echo "pycodestyle"
+pycodestyle insta485
+
+echo "pydocstyle"
+pydocstyle insta485
+
+echo "pylint"
+pylint insta485
+
+echo "eslint"
+npx eslint --ext jsx insta485/js
+
+echo "prettier"
+npx prettier --check insta485/js

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% block head %}
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <title>insta485</title>
+    {% endblock %}
+</head>
+
+<body style = "background-color: lightgrey">
+    <header>
+        <span style="float: left; font-size: 14pt">
+            <a href="/">Home</a>
+        </span>
+    </header>
+    <br>
+      <div style="color: red; font-size: 30px">
+          <h1>Insta485</h1>
+          <hr class="header-divider" />
+      </div>
+    <br>
+    <div id="content">
+<form
+  action="{{url_for('account_crud')}}?target={{url_for('show_index')}}"
+  method="post"
+  enctype="multipart/form-data"
+>
+  <label for="file">Photo</label><br />
+  <input type="file" name="file" required />
+  <br />
+  <label for="fullname">Name</label><br />
+  <input type="text" name="fullname" required />
+  <br />
+  <label for="username">Username</label><br />
+  <input type="text" name="username" required />
+  <br />
+  <label for="email">Email</label><br />
+  <input type="text" name="email" required />
+  <br />
+  <label for="password">Password</label><br />
+  <input type="password" name="password" required />
+  <br />
+  <input type="submit" name="signup" value="sign up" /><br />
+  <br />
+  <input type="hidden" name="operation" value="create" />
+</form>
+<br />
+<p>
+  Have an account? <b><a href="/accounts/login/">Log in</a></b>
+</p>
+</div>
+
+</body>
+
+</html>

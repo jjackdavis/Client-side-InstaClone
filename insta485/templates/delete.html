@@ -1,0 +1,9 @@
+{% extends "base.html" %} 
+{% block content %}
+<p>{{logname}}</p>
+<br/>
+<form action="{{url_for('account_crud')}}?target={{url_for('create_user')}}" method="post" enctype="multipart/form-data">
+  <input type="submit" name="delete" value="confirm delete account"/>
+  <input type="hidden" name="operation" value="delete"/>
+</form>
+{% endblock %}

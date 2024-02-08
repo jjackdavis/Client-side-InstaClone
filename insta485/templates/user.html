@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{username}}</h1>
+{%if logname == username%}
+<a href = "/accounts/edit/">Edit profile</a>
+<br> <br>
+<form action="/accounts/logout/" method="post" enctype="multipart/form-data">
+  <input type="submit" name="logout" value="Logout"/>
+</form>
+{%elif logname_follows_username == true%}
+<div>following
+  <form action="{{url_for('follow')}}?target={{(url_for('show_user', username=username))}}" method="post" enctype="multipart/form-data">
+    <input type="submit" name="unfollow" value="unfollow"/>
+    <input type="hidden" name="username" value="{{username}}"/>
+    <input type="hidden" name="operation" value="unfollow"/>
+  </form>
+</div>
+{%else%} not following
+  <form action="{{url_for('follow')}}?target={{(url_for('show_user', username=username))}}" method="post" enctype="multipart/form-data">
+    <input type="submit" name="follow" value="follow"/>
+    <input type="hidden" name="username" value="{{username}}"/>
+    <input type="hidden" name="operation" value="follow"/>
+  </form>
+{%endif%}
+<br>
+<div>
+  <span>{{total_posts}} {%if total_posts == 1%} post {%else%} posts {%endif%}</span>
+  <span><a href="/users/{{username}}/followers/">{{followers}} {%if followers == 1%} follower {%else%} followers
+      {%endif%}</a></span>
+  <span><a href="/users/{{username}}/following/">{{following}} following</a></span>
+</div>
+<p>{{fullname}}</p>
+{%if logname==username%}
+<div style="border:2px solid #333">
+  <form action="{{url_for('post')}}?target={{(url_for('show_user', username=username))}}" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" accept="image/*" required/>
+    <input type="submit" name="create_post" value="upload new post"/>
+    <input type="hidden" name="operation" value="create"/>
+  </form>
+</div>
+{%endif%}
+<hr style = "border-top: 2px solid #333;">
+{% if total_posts == 0 %}
+<p>No posts yet.</p>
+{% endif %}
+{%for post in posts%}
+<div>
+  <a href="/posts/{{post.postid}}/"><img src="/uploads/{{post.img_url}}" alt="" style="width: 300px; height: 200px" /></a>
+</div>
+{%endfor%}
+{% endblock %}
